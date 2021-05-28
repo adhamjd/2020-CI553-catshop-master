@@ -1,5 +1,8 @@
 package clients;
 import clients.backDoor.BackDoorController;
+import clients.review.ReviewController;
+import clients.review.ReviewModel;
+import clients.review.ReviewView;
 import clients.backDoor.BackDoorModel;
 import clients.backDoor.BackDoorView;
 import clients.cashier.CashierController;
@@ -169,6 +172,27 @@ class Main
 
     model.addObserver( view );       // Add observer to the model
     window.setVisible(true);         // Make window visible
+  }
+  public void startReviewGUI_MVC(MiddleFactory mlf )
+  {
+    Stage stage = new Stage();
+    stage.setTitle( "Review Client MVC" );
+    stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+      @Override
+      public void handle(WindowEvent t) {
+        Platform.exit();
+        System.exit(0);
+      }
+    });
+    Dimension pos = PosOnScrn.getPos();
+
+    ReviewModel model      = new ReviewModel(mlf);
+    ReviewView view        = new ReviewView( stage, mlf, pos.width, pos.height );
+    ReviewController cont  = new ReviewController( model, view );
+    view.setController( cont );
+
+    model.addObserver( view );       // Add observer to the model
+    stage.show();
   }
 
 }
